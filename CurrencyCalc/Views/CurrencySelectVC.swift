@@ -15,7 +15,10 @@ final class CurrencySelectVC: UIViewController {
 		static let smallBarHeight: CGFloat = 44
 	}
 	
+	weak var delegate: MainVC?
+	
 	var currencyDirection: CurrencyDirection?
+	var viewModels: [CurrencyViewModel] = []
 	
 	private let titleBarView: UIView = {
 		let view = UIView()
@@ -43,9 +46,15 @@ final class CurrencySelectVC: UIViewController {
 		return button
 	}()
 	
-	private let tableView: UITableView = {
+	private lazy var tableView: UITableView = {
 		let tableView = UITableView(frame: .zero, style: .plain)
 		tableView.translatesAutoresizingMaskIntoConstraints = false
+		
+		tableView.register(CurrencySelectTVC.self,
+						   forCellReuseIdentifier: String(describing: CurrencySelectTVC.self))
+		tableView.dataSource = self
+		tableView.delegate = self
+		
 		return tableView
 	}()
 	
@@ -62,7 +71,8 @@ final class CurrencySelectVC: UIViewController {
 	
 	private func setupViews() {
 		view.backgroundColor = .white
-		
+		tableView.estimatedRowHeight = 64
+		tableView.rowHeight = UITableView.automaticDimension
 		view.addSubviews(
 			titleBarView,
 			tableView
@@ -96,5 +106,26 @@ final class CurrencySelectVC: UIViewController {
 			tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 			tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 		])
+	}
+}
+
+extension CurrencySelectVC: UITableViewDelegate {
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		delegate?.updateData(with: viewModels[indexPath.row], direction: currencyDirection ?? .none)
+		closeVC()
+	}
+}
+
+extension CurrencySelectVC: UITableViewDataSource {
+	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+		return viewModels.count
+	}
+	
+	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: String(describing: CurrencySelectTVC.self),
+													   for: indexPath) as? CurrencySelectTVC else { return UITableViewCell() }
+		cell.selectionStyle = .none
+		cell.update(with: viewModels[indexPath.row])
+		return cell
 	}
 }

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		843084F7255F3CBF00956119 /* CurrencySelectTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843084F6255F3CBF00956119 /* CurrencySelectTVC.swift */; };
+		843084FA255F3F2500956119 /* CurrencyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843084F9255F3F2500956119 /* CurrencyViewModel.swift */; };
+		843084FD255F494500956119 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843084FC255F494500956119 /* NetworkService.swift */; };
 		84CC78D8255C64EE0042DD8F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC78D7255C64EE0042DD8F /* AppDelegate.swift */; };
 		84CC78DA255C64EE0042DD8F /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC78D9255C64EE0042DD8F /* SceneDelegate.swift */; };
 		84CC78DC255C64EE0042DD8F /* MainVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CC78DB255C64EE0042DD8F /* MainVC.swift */; };
@@ -20,6 +23,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		843084F6255F3CBF00956119 /* CurrencySelectTVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencySelectTVC.swift; sourceTree = "<group>"; };
+		843084F9255F3F2500956119 /* CurrencyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyViewModel.swift; sourceTree = "<group>"; };
+		843084FC255F494500956119 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		84CC78D4255C64EE0042DD8F /* CurrencyCalc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CurrencyCalc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		84CC78D7255C64EE0042DD8F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		84CC78D9255C64EE0042DD8F /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -79,6 +85,7 @@
 				84CC78D7255C64EE0042DD8F /* AppDelegate.swift */,
 				84CC78D9255C64EE0042DD8F /* SceneDelegate.swift */,
 				84CC78E2255C64EF0042DD8F /* LaunchScreen.storyboard */,
+				843084FC255F494500956119 /* NetworkService.swift */,
 			);
 			path = Global;
 			sourceTree = "<group>";
@@ -97,6 +104,7 @@
 			children = (
 				84CC78DB255C64EE0042DD8F /* MainVC.swift */,
 				84CC78F2255C68690042DD8F /* CurrencySelectVC.swift */,
+				843084F6255F3CBF00956119 /* CurrencySelectTVC.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -106,6 +114,7 @@
 			children = (
 				84CC78F7255C68D50042DD8F /* CurrencyModel.swift */,
 				84CC78FA255C68F20042DD8F /* ResponseModel.swift */,
+				843084F9255F3F2500956119 /* CurrencyViewModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -188,8 +197,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				843084FD255F494500956119 /* NetworkService.swift in Sources */,
 				84CC78F8255C68D50042DD8F /* CurrencyModel.swift in Sources */,
+				843084FA255F3F2500956119 /* CurrencyViewModel.swift in Sources */,
 				84CC7902255C6E830042DD8F /* UIView+Extension.swift in Sources */,
+				843084F7255F3CBF00956119 /* CurrencySelectTVC.swift in Sources */,
 				84CC7905255C88ED0042DD8F /* UIApplication+Extension.swift in Sources */,
 				84CC78DC255C64EE0042DD8F /* MainVC.swift in Sources */,
 				84CC78F3255C68690042DD8F /* CurrencySelectVC.swift in Sources */,

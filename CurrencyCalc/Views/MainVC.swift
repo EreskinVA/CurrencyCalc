@@ -11,6 +11,7 @@ import UIKit
 enum CurrencyDirection {
 	case from
 	case to
+	case none
 }
 
 /// Основной экран
@@ -32,12 +33,14 @@ final class MainVC: UIViewController {
 		static let buttonTopOffset: CGFloat = 44
 	}
 	
+	var valutes: [CurrencyViewModel] = []
+	
 	/// Текущий объем валюты который переводим
 	private let fromCurrencyTF: UITextField = {
 		let textField = UITextField()
 		textField.translatesAutoresizingMaskIntoConstraints = false
 		textField.font = UIFont.boldSystemFont(ofSize: Constants.currencyValueFontSize)
-		textField.text = "120.5"
+		textField.text = "0"
 		return textField
 	}()
 	
@@ -46,7 +49,7 @@ final class MainVC: UIViewController {
 		let textField = UITextField()
 		textField.translatesAutoresizingMaskIntoConstraints = false
 		textField.font = UIFont.boldSystemFont(ofSize: Constants.currencyValueFontSize)
-		textField.text = "2.2"
+		textField.text = "0"
 		return textField
 	}()
 	
@@ -55,7 +58,7 @@ final class MainVC: UIViewController {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.font = UIFont.boldSystemFont(ofSize: Constants.currencyNameFontSize)
-		label.text = "RU"
+		label.text = "-"
 		return label
 	}()
 	
@@ -64,7 +67,7 @@ final class MainVC: UIViewController {
 		let label = UILabel()
 		label.translatesAutoresizingMaskIntoConstraints = false
 		label.font = UIFont.boldSystemFont(ofSize: Constants.currencyNameFontSize)
-		label.text = "USD"
+		label.text = "-"
 		return label
 	}()
 	
@@ -127,13 +130,24 @@ final class MainVC: UIViewController {
 		super.viewDidLoad()
 		setupViews()
 		makeConstraints()
+		NetworkService().loadData { model in
+			guard !model.isEmpty else {
+				self.valutes = []
+				self.updateData(with: nil, direction: .none)
+				return
+			}
+			self.valutes = model.compactMap { CurrencyViewModel(model: $0.value) }
+			self.updateData(with: nil, direction: .none)
+		}
 	}
 	
 	/// Перейти на экран выбора валюты
 	/// - Parameter sender: кнопка вызывающая метод
 	@objc private func goToChangeCurrency(_ sender: UIButton) {
 		let currencySelectVC = CurrencySelectVC()
-		currencySelectVC.currencyDirection = sender.tag == 1 ? .to : .from
+		currencySelectVC.currencyDirection = sender.tag == 1 ? .from : .to
+		currencySelectVC.viewModels = valutes
+		currencySelectVC.delegate = self
 		currencySelectVC.modalPresentationStyle = .fullScreen
 		navigationController?.present(currencySelectVC, animated: true)
 	}
@@ -191,6 +205,23 @@ final class MainVC: UIViewController {
 			toCurrencyButton.widthAnchor.constraint(equalToConstant: Constants.buttonWidth),
 			toCurrencyButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight),
 		])
+	}
+	
+	func updateData(with viewModel: CurrencyViewModel?, direction: CurrencyDirection) {
+		switch direction {
+		case .from:
+			fromCurrencyLabel.text = viewModel?.code ?? "-"
+			fromCurrencyTF.text = "0"
+		case .to:
+			toCurrencyLabel.text = viewModel?.code ?? "-"
+			toCurrencyTF.text = "0"
+		case .none:
+			fromCurrencyLabel.text = viewModel?.code ?? "-"
+			fromCurrencyTF.text = "0"
+			toCurrencyLabel.text = "-"
+			toCurrencyTF.text = "0"
+		}
+		
 	}
 }
 
